@@ -1,0 +1,8 @@
+ <section class="section">
+    <div class="container">
+      <h1 class="title">
+       <%= @name %>
+      </h1>
+      <a class="button button-primary" href="/users">Management Console</a>
+    </div>
+  </section>

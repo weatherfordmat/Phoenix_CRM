@@ -1,0 +1,43 @@
+small {
+    color: gray;
+}
+
+/* Components */
+.alert {
+    height: 45px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    color: white;
+    text-align: center;
+    font-size: 25px;
+    opacity: 0.90;
+    cursor: pointer;
+}
+
+.alert:hover {
+    opacity: 1;
+}
+.act {
+    text-decoration: none;
+    padding: 0px 5px 0px 5px;
+}
+
+.error-small {
+    color: red;
+    font-size: 15px;
+    font-style: italic;
+}
+#exit {
+    text-align: right;
+    float: right;
+    padding: 8px;
+    cursor: pointer;
+    font-size: 17px;
+}
+
+.form-group {
+    float: left;
+    margin: 20px;
+}
