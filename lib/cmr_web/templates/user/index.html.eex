@@ -5,33 +5,31 @@ Customer Relationship Management
 </h2>
 
 <table class="table sortable" >
-  <thead>
-    <tr>
-      <th></th>
-      <th>Name</th>
-      <th>Username</th>
-      <th>Password</th>
-      <th>Last Updated</th>
-      <th>Options</th>
-    </tr>
-  </thead>
+    <thead>
+      <tr>
+        <th></th>
+        <th>Name</th>
+        <th>Username</th>
+        <th>Password</th>
+        <th>Last Updated</th>
+        <th>Options</th>
+      </tr>
+    </thead>
   </tbody>
     
 
 <%= render "formAlt.html", Map.put(assigns, :action, user_path(@conn, :index)) %>
 <%= for user <- @users do %>
  <tr>
-  
       <td><%= user.id %></td>
       <td><%= user.name %></td>
       <td><%= user.username %></td>
       <td><%= String.duplicate(".", String.length(user.password)) %></td>
-      <td><%= user.updated_at %>
-
+      <td><%= String.slice(to_string(user.updated_at), 0, 11) %>
       <td class="text-right">
         <span><%= link "Show", to: user_path(@conn, :show, user), class: "act" %></span>
         <span><%= link "Edit", to: user_path(@conn, :edit, user), class: "act" %></span>
-        <span><%= link "Delete", to: user_path(@conn, :delete, user), method: :delete, data: [confirm: "Are you sure?"], class: "act" %></span>
+        <span><%= link "Delete", to: user_path(@conn, :delete, user), method: :delete, class: "act" %></span>
       </td>
     </tr>
 <% end %>

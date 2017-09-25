@@ -15,10 +15,9 @@ defmodule CmrWeb.Router do
 
   scope "/", CmrWeb do
     pipe_through :browser # Use the default browser stack
-
-    get "/", PageController, :index
-    resources "/users", UserController
-    get "/:name", PageController, :index
+    get "/intro", PageController, :index
+    resources "/", UserController
+    
   end
 
   # Other scopes may use custom stacks.
