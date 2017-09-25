@@ -4,7 +4,22 @@ defmodule CmrWeb.UserController do
   alias Cmr.Accounts
   alias Cmr.Accounts.User
 
-  def order(list, rev) do
+  def order(val) do
+    cond do
+      val == "name" ->
+        &(&1.name)
+      val == "username" ->
+        &(&1.username)
+      val == "updated_at" ->
+        &(&1.updated_at)
+      val == "id" ->
+        &(&1.id)
+      val == nil ->
+        &(&1.id)
+    end
+  end
+
+  def is_rev(list, rev) do
     cond do
       rev == "1" ->
         list
@@ -15,9 +30,10 @@ defmodule CmrWeb.UserController do
     end
   end
 
+  # Enum.sort_by(data, &(&1.name)) |> Enum.each(&IO.inspect &1) 
   def index(conn, params) do
     key = "id"
-    users = order(Accounts.list_users(params["sortby"]), params["asc"])
+    users = Enum.sort_by(Accounts.list_users(), order(params["sortby"])) |> is_rev(params["asc"])
     changeset = Accounts.change_user(%User{})
     render(conn, "index.html", users: users, changeset: changeset)
   end

@@ -17,25 +17,8 @@ defmodule Cmr.Accounts do
       [%User{}, ...]
 
   """
-  def list_users(val) do
-
-    cond do
-      val == "name" ->
-        Repo.all(from u in User, order_by: u.name)
-      val == "username" ->
-        Repo.all(from u in User, order_by: u.username)
-      val == "updated_at" ->
-        Repo.all(from u in User, order_by: u.updated_at)
-      val == "id" ->
-        Repo.all(from u in User, order_by: u.id)
-      val == nil ->
-        Repo.all(from u in User, order_by: u.id)
-    end
-
-  end
-
   def list_users() do
-        Repo.all(from u in User, order_by: u.id)
+        Repo.all(User)
   end
 
   @doc """

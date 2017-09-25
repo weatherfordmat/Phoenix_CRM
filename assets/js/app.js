@@ -19,44 +19,85 @@ import "phoenix_html"
 // Local files can be imported directly using relative
 // paths "./socket" or full ones "web/static/js/socket".
 
-// import socket from "./socket"
-
-// https://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
-const getParams = query => {
-    if (!query) {
-      return { };
-    }
-    return (/^[?#]/.test(query) ? query.slice(1) : query)
-      .split('&')
-      .reduce((params, param) => {
-        let [ key, value ] = param.split('=');
-        params[key] = value ? decodeURIComponent(value.replace(/\+/g, ' ')) : '';
-        return params;
-      }, { });
-  };
+import socket from "./socket"
 
 window.onload = function(e) { 
-    let alertExit = document.getElementById('exit');
-    if (alertExit) {
-        let alert = document.getElementById('alert');
-        alertExit.onclick = function() {
-            alert.style.display = "none";
-        }
+    
+    // variables;
+    let url = window.location;
+    let params = $.getParams(url.search);
+
+    // elements;
+    let sorted = document.getElementsByClassName('sortable')
+    sorted = [].slice.call(sorted);
+
+    // called once directly on mount;
+    onInit.init();
+
+    const reSort = (e) => {
+        let name = $.camelCase(e.target.innerHTML)
+        let upOrDown = params["sortby"] === name ?  1 - params['asc'] : params['asc'] || 0
+        location.href = url.origin + `?asc=${upOrDown}&sortby=${name}`;
     }
 
-    var item = 0;
-    let sorted = document.getElementsByClassName('sortable');
-
-    function sort(e) {
-        e.stopPropagation();
-        let upOrDown = 1 - params['asc'] || 0;
-        let name = e.target.innerHTML.toLowerCase().replace(" ", "_");
-        window.location = window.location.origin + `?asc=${upOrDown}&sortby=${name}`
-    }
-
-    let params = getParams(window.location.search);
-    for (var i = 0; i < sorted.length; ++i) {
-        sorted[i].addEventListener('click', sort);
-    }
+    sorted.map(a => {
+        a.addEventListener('click', reSort);
+    });
 }
 
+// helper functions
+const $ = {
+    getEl: function(e) {
+        var text = [];
+        if (e instanceof Object) {
+            for (var i = 0; i < e.length; ++i) {
+                text.push(e[i]);
+            }
+            return text;
+        } else {
+            return [e];
+        }
+    },
+    camelCase: function(str) {
+        return str.replace(/\s/g, '_').toLowerCase();
+    },
+    getParams: function(query) {
+        if (!query) {
+          return { };
+        }
+        return (/^[?#]/.test(query) ? query.slice(1) : query)
+          .split('&')
+          .reduce((params, param) => {
+            let [ key, value ] = param.split('=');
+            params[key] = value ? decodeURIComponent(value.replace(/\+/g, ' ')) : '';
+            return params;
+          }, { });
+    },
+}
+
+const onInit = {
+    init: function() {
+        // add exit button to flash message;
+        let alertExit = document.getElementById('exit');
+        if (alertExit) {
+            let alert = document.getElementById('alert');
+            alertExit.onclick = function() {
+                alert.style.display = "none";
+            }
+        };
+
+        let params = $.getParams(window.location.search);
+        let sortby = params["sortby"] || 'name';
+        
+        // elements;
+        let sorted = document.getElementsByClassName('sortable')
+        sorted = [].slice.call(sorted);
+
+        sorted.map(a => {
+            if ($.camelCase(a.innerHTML) === sortby) {
+                let classNm = params["asc"] == "0" ? ' arrow-down' : 'arrow-up';
+                a.previousSibling.className += " " + classNm;
+            }
+        });
+    }
+}

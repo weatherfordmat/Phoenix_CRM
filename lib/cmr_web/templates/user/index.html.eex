@@ -8,10 +8,10 @@ Customer Relationship Management
     <thead>
       <tr>
         <th></th>
-        <th class="sortable">Name</th>
-        <th class="sortable">Username</th>
+        <th><div class="room"></div><div class="sortable">Name</div></th>
+        <th> <div class="room"></div><div class="sortable">Username</div></th>
         <th>Password</th>
-        <th class="sortable">Updated At</th>
+        <th> <div class="room"></div><div class="sortable">Updated At</div></th>
         <th>Options</th>
       </tr>
     </thead>
@@ -25,7 +25,7 @@ Customer Relationship Management
       <td><%= user.name %></td>
       <td><%= user.username %></td>
       <td><%= String.duplicate(".", String.length(user.password)) %></td>
-      <td><%= String.slice(to_string(user.updated_at), 0, 11) %>
+      <td><%= String.slice(to_string(user.updated_at), 11, 8) %>
       <td class="text-right">
         <span><%= link "Show", to: user_path(@conn, :show, user), class: "act" %></span>
         <span><%= link "Edit", to: user_path(@conn, :edit, user), class: "act" %></span>
