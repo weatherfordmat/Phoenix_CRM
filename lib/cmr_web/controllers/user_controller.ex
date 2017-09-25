@@ -4,20 +4,7 @@ defmodule CmrWeb.UserController do
   alias Cmr.Accounts
   alias Cmr.Accounts.User
 
-  def order(list, val, rev) do
-    cond do
-      val == "name" ->
-        Enum.sort(list, fn(x, y) -> x.name > y.name end)
-      val == "username" ->
-        Enum.sort(list, fn(x, y) -> x.username  > y.username end)
-      val == "updated_at" ->
-        Enum.sort(list, fn(x, y) -> x.updated_at > y.updated_at end)
-      val == "id" ->
-        Enum.sort(list, fn(x, y) -> x.id > y.id end)
-      val == nil ->
-        Enum.sort(list, fn(x, y) -> x.id > y.id end)
-    end
-
+  def order(list, rev) do
     cond do
       rev == "1" ->
         list
@@ -30,7 +17,7 @@ defmodule CmrWeb.UserController do
 
   def index(conn, params) do
     key = "id"
-    users = order(Accounts.list_users(), params["sortby"], params["asc"])
+    users = order(Accounts.list_users(params["sortby"]), params["asc"])
     changeset = Accounts.change_user(%User{})
     render(conn, "index.html", users: users, changeset: changeset)
   end
@@ -88,5 +75,15 @@ defmodule CmrWeb.UserController do
     |> put_flash(:info, opts)
     |> put_flash(:exit, canExit)
     |> put_flash(:backgroundColor, color)
+  end
+end
+
+
+defmodule QuickSort do
+  def sort([]), do: []
+  def sort([head|tail]) do
+    {lesser, greater} = Enum.partition(tail, &(&1 < head))
+    IO.inspect greater
+    sort(lesser) ++ [head] ++ sort(greater)
   end
 end

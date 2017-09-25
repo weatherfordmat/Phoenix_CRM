@@ -4,14 +4,14 @@ Customer Relationship Management
 <small>A system to keep track of leads</small>
 </h2>
 
-<table class="table sortable" >
+<table class="table" >
     <thead>
       <tr>
         <th></th>
-        <th>Name</th>
-        <th>Username</th>
+        <th class="sortable">Name</th>
+        <th class="sortable">Username</th>
         <th>Password</th>
-        <th>Last Updated</th>
+        <th class="sortable">Updated At</th>
         <th>Options</th>
       </tr>
     </thead>
