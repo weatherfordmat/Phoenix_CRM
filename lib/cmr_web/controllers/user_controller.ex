@@ -7,11 +7,12 @@ defmodule CmrWeb.UserController do
 
   # the following plugs are defined in the controllers/authorize.ex file
   plug :user_check when action in [:index, :show]
-  plug :id_check when action in [:edit, :update ]
+  plug :id_check when action in [:edit, :update, :delete]
 
   def index(conn, _) do
+    changeset = Accounts.change_user(%Accounts.User{})
     users = Accounts.list_users()
-    render(conn, "index.html", users: users)
+    render(conn, "index.html", users: users, changeset: changeset)
   end
 
   def new(conn, _) do
@@ -49,8 +50,7 @@ defmodule CmrWeb.UserController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    user = Accounts.get_user!(id)
+  def delete(%Plug.Conn{assigns: %{current_user: user}} = conn, _) do
     {:ok, _user} = Accounts.delete_user(user)
     configure_session(conn, drop: true)
     |> success("User deleted successfully", session_path(conn, :new))

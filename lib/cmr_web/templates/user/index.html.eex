@@ -1,25 +1,38 @@
-<h2>Listing Users</h2>
+<h2>
+<img id="logo" src="https://cdn1.iconfinder.com/data/icons/jewery/500/Diamond-512.png" alt="crystal_image">
+Customer Relationship Management
+<br/>
+<small>A system to keep track of leads</small>
+</h2>
 
-<table class="table">
-  <thead>
-  <tr>
-      <th>Email</th>
-      <th>Options</th>
-    </tr>
-  </thead>
-  <tbody>
+<table class="table" >
+    <thead>
+      <tr>
+        <th class="hideable"></th>
+        <th class="hideable"><div class="room"></div><div class="sortable">Email</div></th>
+        <th> <div class="room"></div><div class="sortable">Last Name</div></th>
+        <th class="hideable"> <div class="room"></div><div class="sortable">Age </div></th>
+        <th class="hideable"> <div class="room"></div><div class="sortable">Updated At</div></th>
+        <th>Options</th>
+      </tr>
+    </thead>
+  </tbody>
+    
+
+<%= render "formAlt.html", Map.put(assigns, :action, user_path(@conn, :index)) %>
 <%= for user <- @users do %>
-    <tr>
-      <td><%= user.email %></td>
+ <tr>
+      <td class="hideable"><%= user.id %>.</td>
+      <td class="hideable"><%= user.email %></td>
+      <td><%= user.lastName %></td>
+      <td class="hideable"><%= user.age %></td>
+      <td class="hideable"><%= String.slice(to_string(user.updated_at), 0, 10) %>
       <td class="text-right">
         <span><%= link "Show", to: user_path(@conn, :show, user), class: "act" %></span>
-      </td>
-      <td>
+        <span><%= link "Edit", to: user_path(@conn, :edit, user), class: "act" %></span>
         <span><%= link "Delete", to: user_path(@conn, :delete, user), method: :delete, class: "act" %></span>
       </td>
     </tr>
 <% end %>
   </tbody>
 </table>
-
-<span><%= link "New User", to: user_path(@conn, :new) %></span>

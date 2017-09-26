@@ -37,7 +37,7 @@ window.onload = function(e) {
     const reSort = (e) => {
         let name = $.camelCase(e.target.innerHTML)
         let upOrDown = params["sortby"] === name ?  1 - params['asc'] : params['asc'] || 0
-        location.href = url.origin + `?asc=${upOrDown}&sortby=${name}`;
+        location.href = url.origin +"/users" + `?asc=${upOrDown}&sortby=${name}`;
     }
 
     sorted.map(a => {
