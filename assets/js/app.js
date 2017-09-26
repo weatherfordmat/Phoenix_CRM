@@ -84,12 +84,18 @@ const onInit = {
             alertExit.onclick = function() {
                 alert.style.display = "none";
             }
+
+            alert.style.opacity = 1;
+            setTimeout(function() { 
+                (function fade(){
+                (alert.style.opacity -= .1) < 0 ? alert.style.display="none" : setTimeout(fade, 60)})()
+            }, 950);
         };
 
         let params = $.getParams(window.location.search);
         let sortby = params["sortby"] || 'name';
         
-        // elements;
+        // add the arrows;
         let sorted = document.getElementsByClassName('sortable')
         sorted = [].slice.call(sorted);
 

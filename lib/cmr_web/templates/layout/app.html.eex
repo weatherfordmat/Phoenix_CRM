@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="A CRM Built on Agile Principles">
+    <meta name="author" content="M. B. Weatherford">
 
     <title>Crystal</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
@@ -13,17 +14,38 @@
   </head>
 
   <body>
-    <div class="container" >
-      <p class="alert" role="alert" id="alert" style=background-color:<%= get_flash(@conn, :backgroundColor) %>>
+
+    <%# Flash %>
+    <%= if get_flash(@conn, :info) do %> 
+    <p class="alert bounceInLeft" role="alert" id="alert" style=background-color:<%= get_flash(@conn, :backgroundColor) %>>
         <%= get_flash(@conn, :info) %> 
         <%= if get_flash(@conn, :exit) do %>
           <span id="exit" >X</span>
         <% end %>
-      </p>
-      <div id="side-bar"></div>
-      <main role="main" style="margin-top: 100px;" >
+    </p>
+    <% end %>
+
+    <%# Navigation %>
+    <header class="u-full-width">
+            <nav>
+                <ul>
+                <%= if @current_user do %>
+                    <li><a href="<%= user_path @conn, :index %>">Users</a></li>
+                    <li><a href="<%= user_path(@conn, :show, @current_user.id) %>"><%= @current_user.email %></a></li>
+                    <% else %>
+                    <li><a href="<%= user_path @conn, :new %>">New user</a></li>
+                    <li><a href="<%= session_path @conn, :new %>">Login</a></li>
+                 <% end %>
+                </ul>
+            </nav>
+    </header>
+
+    <%# Body %>
+    <div class="container">
+      <main role="main" style="margin-top: 100px;"> 
         <%= render @view_module, @view_template, assigns %>
       </main>
+
     </div> <!-- /container -->
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
   </body>

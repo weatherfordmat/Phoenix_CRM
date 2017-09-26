@@ -1,6 +1,12 @@
 defmodule CmrWeb.PageController do
   use CmrWeb, :controller
 
+  import CmrWeb.Authorize
+  alias Phauxth.Log
+  alias Cmr.Accounts
+
+  plug :user_check when action in [:index]
+
   def getName(conn, params) do
     if params["name"], do: "Welcome " <> params["name"] <> ", to my CRM", else: 'Welcome to my CRM!'
   end
@@ -10,10 +16,8 @@ defmodule CmrWeb.PageController do
   end
 
   def index(conn, params) do
-    addInfo(conn, "Sample Message")
+    conn
     |> assign(:name, getName(conn, params))
-    |> assign(:hello, "goose")
-    |> assign(:data, %{"bar" => 2, "baz" => 0, "foo" => 1})
     |> render("index.html")
   end
 

@@ -4,8 +4,37 @@ body, html {
 small {
     color: gray;
 }
-ul, li {
-    font-size: 25px;
+nav {
+   margin-right: 50px;
+}
+ul {
+    padding: 0;
+    margin: 0;
+}
+li {
+    list-style: none;
+}
+li a{
+    text-decoration: none;
+    color: white;
+    float: right;
+    margin: 0px 10px 0px 10px;
+    font-size: 20px;
+    cursor: crosshair;
+}
+li a:hover {
+    color: white;
+    opacity: 0.8;
+    cursor: crosshair;
+}
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 45px;
+    background-color: #1eaedb;
+    color: white;
 }
 #logo {
     width: 55px;
@@ -16,16 +45,20 @@ ul, li {
 }
 /* Components */
 .alert {
-    height: 45px;
+    width: 300px;
+    margin: 10px;
+    opacity: 1;
+    padding: 15px;
     position: fixed;
     top: 0;
-    left: 0;
     right: 0;
     color: white;
     text-align: center;
     font-size: 25px;
-    opacity: 0.90;
     cursor: pointer;
+    z-index: 100;   
+    border: 10px double white;
+    box-shadow: -3px 6px 13px -4px rgba(33,31,33,1);
 }
 .sortable {
     cursor: pointer;
@@ -44,15 +77,14 @@ ul, li {
     font-style: italic;
 }
 #exit {
-    text-align: right;
-    float: right;
-    padding: 8px;
-    cursor: pointer;
-    font-size: 17px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 15px;
+    font-size: 15px;
 }
 
 .form-group {
-    float: left;
     margin: 20px;
 }
 #side-bar {

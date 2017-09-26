@@ -1,88 +1,90 @@
 defmodule CmrWeb.UserControllerTest do
   use CmrWeb.ConnCase
 
+  import CmrWeb.AuthCase
   alias Cmr.Accounts
 
-  @create_attrs %{name: "some name", username: "some username"}
-  @update_attrs %{name: "some updated name", username: "some updated username"}
-  @invalid_attrs %{name: nil, username: nil}
+  @create_attrs %{email: "bill@example.com", password: "hard2guess"}
+  @update_attrs %{email: "william@example.com"}
+  @invalid_attrs %{email: nil}
 
-  def fixture(:user) do
-    {:ok, user} = Accounts.create_user(@create_attrs)
-    user
-  end
-
-  describe "index" do
-    test "lists all users", %{conn: conn} do
-      conn = get conn, user_path(conn, :index)
-      assert html_response(conn, 200) =~ "Listing Users"
+  setup %{conn: conn} = config do
+    conn = conn |> bypass_through(CmrWeb.Router, [:browser]) |> get("/")
+    if email = config[:login] do
+      user = add_user(email)
+      other = add_user("tony@example.com")
+      conn = conn |> put_session(:user_id, user.id) |> send_resp(:ok, "/")
+      {:ok, %{conn: conn, user: user, other: other}}
+    else
+      {:ok, %{conn: conn}}
     end
   end
 
-  describe "new user" do
-    test "renders form", %{conn: conn} do
-      conn = get conn, user_path(conn, :new)
-      assert html_response(conn, 200) =~ "New User"
-    end
+  @tag login: "reg@example.com"
+  test "lists all entries on index", %{conn: conn} do
+    conn = get conn, user_path(conn, :index)
+    assert html_response(conn, 200) =~ "Listing Users"
   end
 
-  describe "create user" do
-    test "redirects to show when data is valid", %{conn: conn} do
-      conn = post conn, user_path(conn, :create), user: @create_attrs
-
-      assert %{id: id} = redirected_params(conn)
-      assert redirected_to(conn) == user_path(conn, :show, id)
-
-      conn = get conn, user_path(conn, :show, id)
-      assert html_response(conn, 200) =~ "Show User"
-    end
-
-    test "renders errors when data is invalid", %{conn: conn} do
-      conn = post conn, user_path(conn, :create), user: @invalid_attrs
-      assert html_response(conn, 200) =~ "New User"
-    end
+  test "renders /users error for unauthorized user", %{conn: conn}  do
+    conn = get conn, user_path(conn, :index)
+    assert redirected_to(conn) == session_path(conn, :new)
   end
 
-  describe "edit user" do
-    setup [:create_user]
-
-    test "renders form for editing chosen user", %{conn: conn, user: user} do
-      conn = get conn, user_path(conn, :edit, user)
-      assert html_response(conn, 200) =~ "Edit User"
-    end
+  test "renders form for new users", %{conn: conn} do
+    conn = get conn, user_path(conn, :new)
+    assert html_response(conn, 200) =~ "New User"
   end
 
-  describe "update user" do
-    setup [:create_user]
-
-    test "redirects when data is valid", %{conn: conn, user: user} do
-      conn = put conn, user_path(conn, :update, user), user: @update_attrs
-      assert redirected_to(conn) == user_path(conn, :show, user)
-
-      conn = get conn, user_path(conn, :show, user)
-      assert html_response(conn, 200) =~ "some updated name"
-    end
-
-    test "renders errors when data is invalid", %{conn: conn, user: user} do
-      conn = put conn, user_path(conn, :update, user), user: @invalid_attrs
-      assert html_response(conn, 200) =~ "Edit User"
-    end
+  @tag login: "reg"
+  test "show chosen user's page", %{conn: conn, user: user} do
+    conn = get conn, user_path(conn, :show, user)
+    assert html_response(conn, 200) =~ "Show User"
   end
 
-  describe "delete user" do
-    setup [:create_user]
-
-    test "deletes chosen user", %{conn: conn, user: user} do
-      conn = delete conn, user_path(conn, :delete, user)
-      assert redirected_to(conn) == user_path(conn, :index)
-      assert_error_sent 404, fn ->
-        get conn, user_path(conn, :show, user)
-      end
-    end
+  test "creates user when data is valid", %{conn: conn} do
+    conn = post conn, user_path(conn, :create), user: @create_attrs
+    assert redirected_to(conn) == session_path(conn, :new)
   end
 
-  defp create_user(_) do
-    user = fixture(:user)
-    {:ok, user: user}
+  test "does not create user and renders errors when data is invalid", %{conn: conn} do
+    conn = post conn, user_path(conn, :create), user: @invalid_attrs
+    assert html_response(conn, 200) =~ "New User"
+  end
+
+  @tag login: "reg@example.com"
+  test "renders form for editing chosen user", %{conn: conn, user: user} do
+    conn = get conn, user_path(conn, :edit, user)
+    assert html_response(conn, 200) =~ "Edit User"
+  end
+
+  @tag login: "reg@example.com"
+  test "updates chosen user when data is valid", %{conn: conn, user: user} do
+    conn = put conn, user_path(conn, :update, user), user: @update_attrs
+    assert redirected_to(conn) == user_path(conn, :show, user)
+    updated_user = Accounts.get(user.id)
+    assert updated_user.email == "william@example.com"
+    conn = get conn, user_path(conn, :show, user)
+    assert html_response(conn, 200) =~ "william@example.com"
+  end
+
+  @tag login: "reg@example.com"
+  test "does not update chosen user and renders errors when data is invalid", %{conn: conn, user: user} do
+    conn = put conn, user_path(conn, :update, user), user: @invalid_attrs
+    assert html_response(conn, 200) =~ "Edit User"
+  end
+
+  @tag login: "reg@example.com"
+  test "deletes chosen user", %{conn: conn, user: user} do
+    conn = delete conn, user_path(conn, :delete, user)
+    assert redirected_to(conn) == session_path(conn, :new)
+    refute Accounts.get(user.id)
+  end
+
+  @tag login: "reg@example.com"
+  test "cannot delete other user", %{conn: conn, other: other} do
+    conn = delete conn, user_path(conn, :delete, other)
+    assert redirected_to(conn) == user_path(conn, :index)
+    assert Accounts.get(other.id)
   end
 end
