@@ -6,6 +6,8 @@ defmodule Cmr.Repo.Migrations.Users do
       add :name, :string
       add :lastname, :string
       add :note, :string
+      add :encrypted_password, :string
+      add :email, :string
 
       timestamps()
     end

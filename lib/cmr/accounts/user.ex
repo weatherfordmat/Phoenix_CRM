@@ -4,9 +4,11 @@ defmodule Cmr.Accounts.User do
   alias Cmr.Accounts.User
 
   schema "users" do
+    field :email, :string
     field :name, :string
     field :lastname, :string
     field :note, :string
+    field :encrypted_password, :string
 
     timestamps()
   end

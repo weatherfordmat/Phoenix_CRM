@@ -1,5 +1,6 @@
 defmodule CmrWeb.Router do
   use CmrWeb, :router
+  use Addict.RoutesHelper
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -16,12 +17,11 @@ defmodule CmrWeb.Router do
   scope "/", CmrWeb do
     pipe_through :browser # Use the default browser stack
     get "/intro", PageController, :index
-    resources "/", UserController
-    
+    resources "/users", UserController
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", CmrWeb do
-  #   pipe_through :api
-  # end
+  scope "/" do
+    addict :routes
+  end
+
 end
