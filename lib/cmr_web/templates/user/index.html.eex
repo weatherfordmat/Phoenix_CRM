@@ -1,4 +1,5 @@
 <h2>
+<img id="logo" src="https://cdn1.iconfinder.com/data/icons/jewery/500/Diamond-512.png" alt="crystal_image">
 Customer Relationship Management
 <br/>
 <small>A system to keep track of leads</small>
@@ -7,11 +8,11 @@ Customer Relationship Management
 <table class="table" >
     <thead>
       <tr>
-        <th></th>
-        <th><div class="room"></div><div class="sortable">Name</div></th>
-        <th> <div class="room"></div><div class="sortable">Username</div></th>
-        <th>Password</th>
-        <th> <div class="room"></div><div class="sortable">Updated At</div></th>
+        <th class="hideable"></th>
+        <th class="hideable"><div class="room"></div><div class="sortable">Name</div></th>
+        <th> <div class="room"></div><div class="sortable">Last Name</div></th>
+        <th class="hideable"> <div class="room"></div><div class="sortable">Notes</div></th>
+        <th class="hideable"> <div class="room"></div><div class="sortable">Updated At</div></th>
         <th>Options</th>
       </tr>
     </thead>
@@ -21,11 +22,11 @@ Customer Relationship Management
 <%= render "formAlt.html", Map.put(assigns, :action, user_path(@conn, :index)) %>
 <%= for user <- @users do %>
  <tr>
-      <td><%= user.id %></td>
-      <td><%= user.name %></td>
-      <td><%= user.username %></td>
-      <td><%= String.duplicate(".", String.length(user.password)) %></td>
-      <td><%= String.slice(to_string(user.updated_at), 11, 8) %>
+      <td class="hideable"><%= user.id %>.</td>
+      <td class="hideable"><%= user.name %></td>
+      <td><%= user.lastname %></td>
+      <td class="hideable"><%= user.note %></td>
+      <td class="hideable"><%= String.slice(to_string(user.updated_at), 0, 10) %>
       <td class="text-right">
         <span><%= link "Show", to: user_path(@conn, :show, user), class: "act" %></span>
         <span><%= link "Edit", to: user_path(@conn, :edit, user), class: "act" %></span>

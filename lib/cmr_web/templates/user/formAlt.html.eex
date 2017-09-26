@@ -1,24 +1,24 @@
 <%= form_for @changeset, @action, fn f -> %>
-        <td></td>
-        <td>
+        <td class="hideable"></td>
+        <td class="hideable">
                 <%= text_input f, :name, class: "form-control" %>
                    <span class="error-small"> <%= error_tag f, :name %></span>
         </td>
-      <td>
-                <%= text_input f, :username, class: "form-control" %>
+      <td class="hideable">
+                <%= text_input f, :lastname, class: "form-control" %>
                   <span class="error-small"><%= error_tag f, :username %></span>
       </td>
    
-      <td>
-                <%= password_input f, :password, class: "form-control" %>
+      <td class="hideable">
+                <%= text_input f, :note, class: "form-control" %>
                 <span class="error-small"> <%= error_tag f, :password %> </span>
       </td>
-         <td>
+         <td class="hideable">
         <span class: "button">
            <%= link "Clear", class: "button", to: user_path(@conn, :index) %>
         </span>
         </td>
-      <td >
+      <td class="hideable">
         <span class: "button button-primary">
             <%= submit  "Add New User", class: "button button-primary" %>
         </span>

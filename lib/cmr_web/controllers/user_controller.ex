@@ -8,12 +8,14 @@ defmodule CmrWeb.UserController do
     cond do
       val == "name" ->
         &(&1.name)
-      val == "username" ->
-        &(&1.username)
+      val == "last_name" ->
+        &(&1.lastname)
       val == "updated_at" ->
         &(&1.updated_at)
       val == "id" ->
         &(&1.id)
+      val == "notes" ->
+        &(&1.note)
       val == nil ->
         &(&1.id)
     end

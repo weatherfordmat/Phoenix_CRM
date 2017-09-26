@@ -10,17 +10,18 @@ exports.config = {
       //   "js/app.js": /^js/,
       //   "js/vendor.js": /^(?!js)/
       // }
-      //
-      // To change the order of concatenation of files, explicitly mention here
-      // order: {
-      //   before: [
-      //     "vendor/js/jquery-2.1.1.js",
-      //     "vendor/js/bootstrap.min.js"
-      //   ]
-      // }
     },
     stylesheets: {
-      joinTo: "css/app.css"
+      joinTo: "css/app.css",
+      order: {
+        before: [
+          "css/normalize.css",
+          "css/skeleton.css"
+        ],
+        after: [
+          "css/app.css"
+        ]
+      }
     },
     templates: {
       joinTo: "js/app.js"

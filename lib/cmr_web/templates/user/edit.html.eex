@@ -2,4 +2,4 @@
 
 <%= render "formNoPass.html", Map.put(assigns, :action, user_path(@conn, :update, @user)) %>
 
-<span><%= link "Back", to: user_path(@conn, :index) %></span>
+<span class="back-link"><%= link "Back", to: user_path(@conn, :index) %></span>

@@ -1,5 +1,5 @@
-<h2>Show User</h2>
-
+<h2>User Details</h2>
+<hr>
 <ul>
 
   <li>
@@ -8,16 +8,16 @@
   </li>
 
   <li>
-    <strong>Username:</strong>
-    <%= @user.username %>
+    <strong>Last Name:</strong>
+    <%= @user.lastname %>
   </li>
 
   <li>
-      <strong>Password:</strong>
-      <%= String.duplicate(".", String.length(@user.password)) %>
+      <strong>Notes:</strong>
+      <%= @user.note %>
   </li>
 
 </ul>
 
-<span><%= link "Edit", to: user_path(@conn, :edit, @user) %></span>
-<span><%= link "Back", to: user_path(@conn, :index) %></span>
+<span class="back-link"><%= link "Edit", to: user_path(@conn, :edit, @user) %></span>
+<span class="back-link"><%= link "Back", to: user_path(@conn, :index) %></span>

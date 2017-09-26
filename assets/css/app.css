@@ -1,7 +1,19 @@
+body, html {
+    font-family: 'Lato', sans-serif;
+}
 small {
     color: gray;
 }
-
+ul, li {
+    font-size: 25px;
+}
+#logo {
+    width: 55px;
+}
+.back-link {
+    font-size: 25px;
+    margin-right: 25px;
+}
 /* Components */
 .alert {
     height: 45px;
@@ -15,7 +27,9 @@ small {
     opacity: 0.90;
     cursor: pointer;
 }
-
+.sortable {
+    cursor: pointer;
+}
 .alert:hover {
     opacity: 1;
 }
@@ -41,15 +55,30 @@ small {
     float: left;
     margin: 20px;
 }
+#side-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 55px;
+    background-color: #1eaedb;
+}
 @media screen and (max-width: 750px) {
     .form-group {
         float: none;
         margin: 0px;
     }
+    .hideable {
+        display: none;
+    }
+    #side-bar {
+        display: none;
+    }
 }
 .room {
     float: left;
-    margin-right: 5px;
+    width: 12px;
+    margin-right: 3px;
 }
 .arrow-up {
     width: 0; 

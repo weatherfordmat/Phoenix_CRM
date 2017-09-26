@@ -7,8 +7,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Customer Management Platform</title>
+    <title>Crystal</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300" rel="stylesheet">
   </head>
 
   <body>
@@ -19,6 +20,7 @@
           <span id="exit" >X</span>
         <% end %>
       </p>
+      <div id="side-bar"></div>
       <main role="main" style="margin-top: 100px;" >
         <%= render @view_module, @view_template, assigns %>
       </main>
