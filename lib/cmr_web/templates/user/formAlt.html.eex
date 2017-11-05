@@ -1,17 +1,17 @@
 <%= form_for @changeset, @action, fn f -> %>
         <td class="hideable"></td>
         <td class="hideable">
-                <%= text_input f, :name, class: "form-control" %>
-                   <span class="error-small"> <%= error_tag f, :name %></span>
+        <%= text_input f, :email, class: "form-control" %>
+        <span class="error-small"> <%= error_tag f, :email %></span>
         </td>
       <td class="hideable">
-                <%= text_input f, :lastname, class: "form-control" %>
-                  <span class="error-small"><%= error_tag f, :username %></span>
+        <%= text_input f, :lastName, class: "form-control" %>
+        <span class="error-small"><%= error_tag f, :lastName %></span>
       </td>
    
       <td class="hideable">
-                <%= text_input f, :note, class: "form-control" %>
-                <span class="error-small"> <%= error_tag f, :password %> </span>
+        <%= text_input f, :age, class: "form-control" %>
+        <span class="error-small"> <%= error_tag f, :age %> </span>
       </td>
          <td class="hideable">
         <span class: "button">

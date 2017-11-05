@@ -12,8 +12,8 @@ Customer Relationship Management
         <th class="hideable"><div class="room"></div><div class="sortable">Email</div></th>
         <th> <div class="room"></div><div class="sortable">Last Name</div></th>
         <th class="hideable"> <div class="room"></div><div class="sortable">Age </div></th>
-        <th class="hideable"> <div class="room"></div><div class="sortable">Updated At</div></th>
-        <th>Options</th>
+        <th class="hideable"> <div class="room"></div><div class="sortable">Options</div></th>
+        <th></th>
       </tr>
     </thead>
   </tbody>
@@ -21,6 +21,7 @@ Customer Relationship Management
 
 <%= render "formAlt.html", Map.put(assigns, :action, user_path(@conn, :index)) %>
 <%= for user <- @users do %>
+<%= if user.lead do %>
  <tr>
       <td class="hideable"><%= user.id %>.</td>
       <td class="hideable"><%= user.email %></td>
@@ -33,6 +34,7 @@ Customer Relationship Management
         <span><%= link "Delete", to: user_path(@conn, :delete, user), method: :delete, class: "act" %></span>
       </td>
     </tr>
+    <% end %>
 <% end %>
   </tbody>
 </table>

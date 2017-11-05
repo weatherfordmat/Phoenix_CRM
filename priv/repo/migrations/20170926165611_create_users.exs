@@ -6,6 +6,7 @@ defmodule Cmr.Repo.Migrations.CreateUsers do
       add :email, :string
       add :firstName, :string
       add :lastName, :string
+      add :lead, :boolean
       add :age, :integer
       add :password_hash, :string
 

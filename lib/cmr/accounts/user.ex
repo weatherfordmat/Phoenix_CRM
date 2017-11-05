@@ -7,6 +7,7 @@ defmodule Cmr.Accounts.User do
     field :email, :string
     field :firstName, :string
     field :lastName, :string
+    field :lead, :boolean
     field :age, :integer
     field :password, :string, virtual: true
     field :password_hash, :string
