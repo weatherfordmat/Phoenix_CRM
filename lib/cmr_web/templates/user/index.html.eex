@@ -11,7 +11,7 @@ Customer Relationship Management
         <th class="hideable"></th>
         <th class="hideable"><div class="room"></div><div class="sortable">Email</div></th>
         <th> <div class="room"></div><div class="sortable">Last Name</div></th>
-        <th class="hideable"> <div class="room"></div><div class="sortable">Age </div></th>
+        <th class="hideable"> <div class="room"></div><div class="sortable">Active </div></th>
         <th class="hideable"> <div class="room"></div><div class="sortable">Options</div></th>
         <th></th>
       </tr>

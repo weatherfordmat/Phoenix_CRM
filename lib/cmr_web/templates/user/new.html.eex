@@ -9,9 +9,9 @@
   </div>
 
   <div class="form-group">
-    <%= label f, :lastName, class: "control-label" %>
-    <%= text_input f, :lastName, class: "form-control" %>
-    <%= error_tag f, :lastName %>
+    <%= label f, :password, class: "control-label" %>
+    <%= password_input f, :password, class: "form-control" %>
+    <%= error_tag f, :password %>
   </div>
 
   <div class="form-group">

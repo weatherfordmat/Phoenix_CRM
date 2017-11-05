@@ -6,9 +6,9 @@
   <% end %>
 
   <div class="form-group">
-    <%= label f, :email, class: "control-label" %>
-    <%= text_input f, :email, class: "form-control" %>
-    <%= error_tag f, :email %>
+    <%= label f, :name, class: "control-label" %>
+    <%= text_input f, :name, class: "form-control" %>
+    <%= error_tag f, :name %>
   </div>
 
   <div class="form-group">
@@ -18,9 +18,9 @@
   </div>
 
   <div class="form-group">
-    <%= label f, :age, class: "control-label" %>
-    <%= text_input f, :age, class: "form-control" %>
-    <%= error_tag f, :age %>
+    <%= label f, :note, class: "control-label" %>
+    <%= text_input f, :note, class: "form-control" %>
+    <%= error_tag f, :note %>
   </div>
 
   <div >
